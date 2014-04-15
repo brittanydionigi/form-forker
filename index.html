@@ -106,11 +106,10 @@
           var branchMethod = $(fork).data('branching-fn'); // determine the type of evaluation we need to do on the input value
           if ($(fork).prop('type') === 'text') { $(fork).keyup(function() { $(fork).trigger('change'); }); }
           $(fork).change(function (e) {
-            var opts = {
-              childBranches: $('#branching-form').find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
-              userEnteredValue: $(fork).val()
-            }
-            userFeedbackForm[branchMethod](opts);
+            var childBranches = $('#branching-form').find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
+                userEnteredValue: $(fork).val();
+
+            userFeedbackForm[branchMethod](childBranches, userEnteredValue);
           });
         });
 

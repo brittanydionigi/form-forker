@@ -105,14 +105,14 @@ var BranchingForm = function(form, forks) {
    * Method for comparing integer values with arithmetic operators. This code is method is CRAZY.
    * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
    */
-  this.integerEval = function(opts) {
-    var userEnteredValue = parseInt(opts.userEnteredValue), // convert input value from string to integer
+  this.integerEval = function(childBranches, userEnteredValue) {
+    var userEnteredValue = parseInt(userEnteredValue), // convert input value from string to integer
       logicalOperator,
       numericOperations,
       conditionsForShowingChildBranch;
 
     /* for each of the possible child branches, find the condition that must be met in order for them to be shown */
-    _.each(opts.childBranches, function(childBranch) {
+    _.each(childBranches, function(childBranch) {
       var $childBranch = $(childBranch),
         showOnValueAttribute = $(childBranch).data('show-on-value'),
         conditionType = typeof showOnValueAttribute,
@@ -163,12 +163,12 @@ var BranchingForm = function(form, forks) {
    * Compare string values. Will also work for boolean values by comparing their string equivalents, though this could get buggy.
    * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
    */
-  this.stringEval = function(opts) {
+  this.stringEval = function(childBranches, userEnteredValue) {
     var self = this,
-      userEnteredValue = self.util.cleanString(opts.userEnteredValue),
+      userEnteredValue = self.util.cleanString(userEnteredValue),
       childBranchShouldBeShown;
 
-    _.each(opts.childBranches, function(childBranch) {
+    _.each(childBranches, function(childBranch) {
       var $childBranch = $(childBranch),
         conditionsForShowingChildBranch = $childBranch.data('show-on-value').toString().split(','); // grab the conditions that must be true in order to show this child branch
       conditionsForShowingChildBranch = _.map(conditionsForShowingChildBranch, function(condition) {
