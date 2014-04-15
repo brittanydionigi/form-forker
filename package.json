@@ -1,0 +1,20 @@
+{
+  "name": "form-forker",
+  "version": "0.0.0",
+  "description": "Fork your forms based on user input",
+  "main": "index.html",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": "",
+  "author": "Brittany Storoz",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "~0.9.2",
+    "grunt-mocha": "~0.4.7",
+    "grunt-jsvalidate": "~0.2.2",
+    "grunt-jsbeautifier": "~0.2.6",
+    "grunt-release": "~0.7.0",
+    "chai": "~1.9.1"
+  }
+}
