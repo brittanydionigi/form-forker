@@ -8,7 +8,8 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        'js/*.js'
+        'js/*.js',
+        'test/*.js'
       ]
     },
     jsvalidate: {
