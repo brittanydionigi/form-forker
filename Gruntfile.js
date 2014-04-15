@@ -8,9 +8,7 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        'examples.js',
-        'selectah.js',
-        'test/*.js'
+        'js/*.js'
       ]
     },
     jsvalidate: {
@@ -21,7 +19,7 @@ module.exports = function(grunt) {
       index: ['test/index.html'],
       options: {
         run: true,
-        globals: ['React', 'Selectah']
+        globals: []
       }
     },
     jsbeautifier: {
@@ -86,7 +84,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-release');
 
   // grunt.registerTask('default', ['install-hook', 'jshint', 'jsvalidate', 'jsbeautifier', 'mocha']);
-  grunt.registerTask('default', []);
+  // grunt.registerTask('default', []);
   // grunt.registerTask('precommit', ['jsvalidate', 'jshint', 'jsbeautifier', 'mocha']);
 
   // grunt.registerTask('install-hook', function() {
