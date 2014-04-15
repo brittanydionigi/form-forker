@@ -1,20 +1,106 @@
-body { font: 200 16px/18px 'helvetica',arial,sans-serif; max-width: 600px; margin: 50px auto; color: #000; padding: 10px 50px; border-left: 1px solid #f8f8f8; border-right: 1px solid #f8f8f8; min-height: 1000px; }
-h1 { font: 100 26px/30px 'helvetica',arial,sans-serif; font-weight: 100; margin: 0 0 20px 0;  color: #999; padding: 0px;  }
-#branching-form div.field p.info { font-size: 11px; background: rgba(0,0,0,0.3); padding: 2px 10px; color: #333; text-align: right; margin: 0 0 5px 0; }
-#branching-form div.field > div.field > p.info { background: rgba(0,0,0,0.2);  }
-#branching-form div.field > div.field > div.field > p.info { background: rgba(0,0,0,0.1); }
-#branching-form div.field p.info span.level { float: left; }
-#test { display: inline; }
-#branching-form div.field { padding: 15px 0px 15px 15px; height: auto; transition: padding 0.2s ease 0.0s; }
-#branching-form div.field label { display: block; padding: 5px 0px; }
-#branching-form div.field input { width: 99%; height: 18px; }
-#branching-form div.field input[type="radio"] { display: inline-block; margin: 10px 5px; width: auto; vertical-align: middle; }
-#branching-form div.field.hidden { overflow: hidden; height: 0px; padding: 0px 0px 0px 15px; transition: padding 0.2s ease 0.0s; }
-#branching-form div.field span.custom-radio { border: 1px solid #bfbfbf; border-radius: 5px; display: inline-block; margin: 5px 0 10px 0px; font: bold 10px sans-serif; color: #717171; background-color: #ffffff;
-padding: 4px 9px; cursor:pointer; }
-#branching-form div.field span.custom-radio.radio-selected { background-color: #cbcbcb; }
-
-#fake-submit-button { background-color: #6288a5; border: 1px solid rgb(83, 118, 145); border-radius: 3px; font: 600 13px/20px 'helvetica',arial,sans-serif; text-transform: uppercase; padding: 5px 15px; max-width: 100px; text-align: center; margin: 0 auto; color: #fff; }
-#fake-submit-button:hover { background-color: #326891; border-color: #325c8a; cursor: pointer; }
-#fake-post-data { margin: 40px auto; max-width: 600px; font: 400 12px/16px 'courier',serif; word-wrap: break-word; }
-#fake-post-data h2 { font: 600 10px/16px 'helvetica',arial,sans-serif; color: #666; text-transform: uppercase; background-color: #eee; padding: 5px 10px 3px 10px; }
+body {
+  font: 200 16px/18px'helvetica', arial, sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  color: #000;
+  padding: 10px 50px;
+  border-left: 1px solid #f8f8f8;
+  border-right: 1px solid #f8f8f8;
+  min-height: 1000px;
+}
+h1 {
+  font: 100 26px/30px'helvetica', arial, sans-serif;
+  font-weight: 100;
+  margin: 0 0 20px 0;
+  color: #999;
+  padding: 0px;
+}
+#branching-form div.field p.info {
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 10px;
+  color: #333;
+  text-align: right;
+  margin: 0 0 5px 0;
+}
+#branching-form div.field > div.field > p.info {
+  background: rgba(0, 0, 0, 0.2);
+}
+#branching-form div.field > div.field > div.field > p.info {
+  background: rgba(0, 0, 0, 0.1);
+}
+#branching-form div.field p.info span.level {
+  float: left;
+}
+#test {
+  display: inline;
+}
+#branching-form div.field {
+  padding: 15px 0px 15px 15px;
+  height: auto;
+  transition: padding 0.2s ease 0.0s;
+}
+#branching-form div.field label {
+  display: block;
+  padding: 5px 0px;
+}
+#branching-form div.field input {
+  width: 99%;
+  height: 18px;
+}
+#branching-form div.field input[type="radio"] {
+  display: inline-block;
+  margin: 10px 5px;
+  width: auto;
+  vertical-align: middle;
+}
+#branching-form div.field.hidden {
+  overflow: hidden;
+  height: 0px;
+  padding: 0px 0px 0px 15px;
+  transition: padding 0.2s ease 0.0s;
+}
+#branching-form div.field span.custom-radio {
+  border: 1px solid #bfbfbf;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 5px 0 10px 0px;
+  font: bold 10px sans-serif;
+  color: #717171;
+  background-color: #ffffff;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+#branching-form div.field span.custom-radio.radio-selected {
+  background-color: #cbcbcb;
+}
+#fake-submit-button {
+  background-color: #6288a5;
+  border: 1px solid rgb(83, 118, 145);
+  border-radius: 3px;
+  font: 600 13px/20px'helvetica', arial, sans-serif;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  max-width: 100px;
+  text-align: center;
+  margin: 0 auto;
+  color: #fff;
+}
+#fake-submit-button: hover {
+  background-color: #326891;
+  border-color: #325c8a;
+  cursor: pointer;
+}
+#fake-post-data {
+  margin: 40px auto;
+  max-width: 600px;
+  font: 400 12px/16px'courier', serif;
+  word-wrap: break-word;
+}
+#fake-post-data h2 {
+  font: 600 10px/16px'helvetica', arial, sans-serif;
+  color: #666;
+  text-transform: uppercase;
+  background-color: #eee;
+  padding: 5px 10px 3px 10px;
+}
