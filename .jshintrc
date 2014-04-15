@@ -16,8 +16,8 @@
   "smarttabs": true,
   "strict": true,
   "predef": [
-    "React",
-    "Selectah",
+    "$",
+    "_",
     "describe",
     "it"
   ]
