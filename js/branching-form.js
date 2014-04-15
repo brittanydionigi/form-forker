@@ -4,6 +4,8 @@
    * @param {array} forks An array of the jQuery form elements that act as the 'forks' for branching when their values change
    */
   var BranchingForm = function(form, forks) {
+    'use strict';
+
     this.domForm = form;
     this.forks = forks;
 
@@ -55,23 +57,17 @@
       convertToArithmeticComparison:  function (comparisonOperator, userEnteredValue, integerToCompareAgainst) {
         switch (comparisonOperator) {
           case 'gte':
-            return (userEnteredValue >= integerToCompareAgainst)
-            break;
+            return (userEnteredValue >= integerToCompareAgainst);
           case 'gt':
-            return (userEnteredValue > integerToCompareAgainst)
-            break;
+            return (userEnteredValue > integerToCompareAgainst);
           case 'lte':
-            return (userEnteredValue <= integerToCompareAgainst)
-            break;
+            return (userEnteredValue <= integerToCompareAgainst);
           case 'lt':
-            return (userEnteredValue < integerToCompareAgainst)
-            break;
+            return (userEnteredValue < integerToCompareAgainst);
           case 'eq':
-            return (userEnteredValue == integerToCompareAgainst)
-            break;
+            return (userEnteredValue === integerToCompareAgainst);
           case 'noteq':
-            return (userEnteredValue != integerToCompareAgainst)
-            break;
+            return (userEnteredValue !== integerToCompareAgainst);
         }
       },
 
@@ -89,13 +85,14 @@
         /* If there are multiple conditions but the logical operator is an ||, we can return true after the first condition that passes.
         /* If there is no logical operator (only 1 condition is specified), or it is an &&, we must loop through all conditions and only return true if all pass.
         /* We will set the loopingMethod variable to either 'some' or 'every' depending on these conditions. See: http://underscorejs.org/#every */
-        (logicalOperator && logicalOperator === '_or_') ? loopingMethod = 'some' : loopingMethod = 'every';
+        (logicalOperator && logicalOperator === '_or_') ? (loopingMethod = 'some') : (loopingMethod = 'every');
 
         /* Loop through the conditions that must be met to show a particular child branch */
         valuePassesConditions = _[loopingMethod](conditionsToBeMet, function (condition) {
-          var condition = condition.split('-'),
-            comparisonOperator = condition[0], // gte, gt, lte, lt, eq, noteq
-            integerToCompareAgainst = condition[1]; // integer we will compare the userEnteredValue to
+          condition = condition.split('-');
+
+          var comparisonOperator = condition[0], // gte, gt, lte, lt, eq, noteq
+              integerToCompareAgainst = condition[1]; // integer we will compare the userEnteredValue to
 
           return this.convertToArithmeticComparison(comparisonOperator, userEnteredValue, integerToCompareAgainst);
         }, this);
@@ -117,8 +114,9 @@
           /* for each of the possible child branches, find the condition that must be met in order for them to be shown */
           _.each(opts.childBranches, function (childBranch) {
             var $childBranch = $(childBranch),
-            showOnValueAttribute = $(childBranch).data('show-on-value'),
-            conditionType = typeof showOnValueAttribute;
+                showOnValueAttribute = $(childBranch).data('show-on-value'),
+                conditionType = typeof showOnValueAttribute,
+                childBranchShouldBeShown;
 
             if (conditionType === 'string') {
               if (showOnValueAttribute.indexOf(',') !== -1) { conditionType = 'integerArray'; }
@@ -141,6 +139,7 @@
                 _.each(conditionsForShowingChildBranch, function(condition) {
                   numericOperations.push('eq-' + condition);
                 });
+                break;
 
               case 'logicalExpression': // data-show-on-value="gte-3_and_lte-7"
                 conditionsForShowingChildBranch = showOnValueAttribute.split(/(\_and\_|\_or\_)/g);
@@ -161,7 +160,8 @@
          */
         this.stringEval = function(opts) {
           var self = this,
-          userEnteredValue = self.util.cleanString(opts.userEnteredValue);
+              userEnteredValue = self.util.cleanString(opts.userEnteredValue),
+              childBranchShouldBeShown;
 
           _.each(opts.childBranches, function(childBranch) {
             var $childBranch = $(childBranch),
@@ -172,6 +172,6 @@
               childBranchShouldBeShown = (conditionsForShowingChildBranch.indexOf(userEnteredValue) !== -1);
               (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden'); $childBranch.find('div.field').addClass('hidden');
 
-          })
-        }
+          });
+        };
   };
