@@ -98,33 +98,20 @@
     <script type="text/javascript">
 
       (function () {
-        /* Instantiate new branching form object */
-        var userFeedbackForm = new BranchingForm($('#branching-form'), $('#branching-form .fork'));
+        $('#branching-form').forkable('.fork');
 
-        /* Attach change event handler to monitor the values of our branch forks & evaluate them with the appropriate userFeedbackForm method */
-        _.each(userFeedbackForm.forks, function (fork) {
-          var branchMethod = $(fork).data('branching-fn'); // determine the type of evaluation we need to do on the input value
-          if ($(fork).prop('type') === 'text') { $(fork).keyup(function() { $(fork).trigger('change'); }); }
-          $(fork).change(function (e) {
-            var childBranches = $('#branching-form').find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
-                userEnteredValue = $(fork).val();
+        // /* Attach click event handler for custom radios */
+        // $('#branching-form').find('div span.custom-radio').click(function(e) {
+        //   userFeedbackForm.util.handleCustomRadios(e);
+        // });
 
-            userFeedbackForm[branchMethod](childBranches, userEnteredValue);
-          });
-        });
-
-        /* Attach click event handler for custom radios */
-        $('#branching-form').find('div span.custom-radio').click(function(e) {
-          userFeedbackForm.util.handleCustomRadios(e);
-        });
-
-        /* Stub submit button to display postData on form submit */
-        $('#fake-submit-button').click(function(e) {
-          var stringifiedPostData = userFeedbackForm.postData();
-          stringifiedPostData = JSON.stringify(stringifiedPostData);
-          var radioVal = $(userFeedbackForm).find('input[type=radio').val();
-          $('#fake-post-data').html('<h2>Post Data on Submit:</h2>' + stringifiedPostData);
-        });
+        // /* Stub submit button to display postData on form submit */
+        // $('#fake-submit-button').click(function(e) {
+        //   var stringifiedPostData = userFeedbackForm.postData();
+        //   stringifiedPostData = JSON.stringify(stringifiedPostData);
+        //   var radioVal = $(userFeedbackForm).find('input[type=radio').val();
+        //   $('#fake-post-data').html('<h2>Post Data on Submit:</h2>' + stringifiedPostData);
+        // });
 
       })();
 
