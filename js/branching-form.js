@@ -18,6 +18,7 @@
 
   "use strict";
 
+  // TO DO: Handle ! in conditional syntax, let users map custom conditional syntax
   $.fn.forkable = function(forks, opts) {
 
     var form = $(this);
@@ -174,6 +175,7 @@
       /*
        * Method for comparing integer values with arithmetic operators. This code is method is CRAZY.
        * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
+       * TO DO: add range 5..10 equation
        */
       integerEval: function(childBranches, userEnteredValue) {
         var self = this,
