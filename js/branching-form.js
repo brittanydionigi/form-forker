@@ -84,7 +84,8 @@ BranchingForm.prototype = {
      * @param {string} logicalOperator The logical operator to use when evaluating multiple conditions // possible values: _and_, _or_
      */
     parseNumericConditions: function(userEnteredValue, conditionsToBeMet, logicalOperator) {
-      var valuePassesConditions, loopingMethod;
+      var valuePassesConditions, loopingMethod,
+          userInput = parseInt(userEnteredValue);
 
       /* If there are multiple conditions but the logical operator is an ||, we can return true after the first condition that passes.
       /* If there is no logical operator (only 1 condition is specified), or it is an &&, we must loop through all conditions and only return true if all pass.
@@ -96,9 +97,9 @@ BranchingForm.prototype = {
         condition = condition.split('-');
 
         var comparisonOperator = condition[0], // gte, gt, lte, lt, eq, noteq
-          integerToCompareAgainst = condition[1]; // integer we will compare the userEnteredValue to
+          integerToCompareAgainst = parseInt(condition[1]); // integer we will compare the userEnteredValue to
 
-        return this.convertToArithmeticComparison(comparisonOperator, userEnteredValue, integerToCompareAgainst);
+        return this.convertToArithmeticComparison(comparisonOperator, userInput, integerToCompareAgainst);
       }, this);
       return valuePassesConditions;
     },
