@@ -36,7 +36,6 @@
 
     BranchingForm.prototype = {
 
-      /* Attach change event handler to monitor the values of our forks */
       init: function() {
         var self = this;
 
@@ -48,6 +47,7 @@
           });
         }
 
+        /* Set up event handlers to monitor the values of our forks */
         $.each(self.forks, function(index, fork) {
           var branchMethod = $(fork).data('branching-fn'); // determine the type of evaluation we need to do on the input value
           if ($(fork).prop('type') === 'text') {
