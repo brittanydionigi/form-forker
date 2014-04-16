@@ -34,7 +34,7 @@
       /* Attach change event handler to monitor the values of our forks */
       init: function() {
         var self = this;
-        _.each(self.forks, function(fork) {
+        $.each(self.forks, function(index, fork) {
           var branchMethod = $(fork).data('branching-fn'); // determine the type of evaluation we need to do on the input value
           if ($(fork).prop('type') === 'text') {
             $(fork).keyup(function() {
@@ -56,7 +56,7 @@
           inputFieldsToSend = unhiddenFields.find('> input, > textarea, > select'),
           postData = {};
 
-        _.each(inputFieldsToSend, function(input) {
+        $.each(inputFieldsToSend, function(index, input) {
           var postVal;
           ($(input).prop('type') === 'radio') ? postVal = $('input:checked').val() : postVal = $(input).val(); // if input is a radio button, only send the value of the checked radio
 
@@ -121,23 +121,31 @@
          * @param {string} logicalOperator The logical operator to use when evaluating multiple conditions // possible values: _and_, _or_
          */
         parseNumericConditions: function(userEnteredValue, conditionsToBeMet, logicalOperator) {
-          var valuePassesConditions, loopingMethod,
-            userInput = parseInt(userEnteredValue);
-
-          /* If there are multiple conditions but the logical operator is an ||, we can return true after the first condition that passes.
-          /* If there is no logical operator (only 1 condition is specified), or it is an &&, we must loop through all conditions and only return true if all pass.
-          /* We will set the loopingMethod variable to either 'some' or 'every' depending on these conditions. See: http://underscorejs.org/#every */
-          (logicalOperator && logicalOperator === '_or_') ? (loopingMethod = 'some') : (loopingMethod = 'every');
+          var self = this,
+            userInput = parseInt(userEnteredValue),
+            valuePassesConditions;
 
           /* Loop through the conditions that must be met to show a particular child branch */
-          valuePassesConditions = _[loopingMethod](conditionsToBeMet, function(condition) {
-            condition = condition.split('-');
+          $.each(conditionsToBeMet, function(index, condition) {
+            var conditionToEvaluate = condition.split('-'),
+              comparisonOperator = conditionToEvaluate[0], // gte, gt, lte, lt, eq, noteq
+              integerToCompareAgainst = parseInt(conditionToEvaluate[1]), // integer we will compare the userEnteredValue to
+              conditionResult = self.convertToArithmeticComparison(comparisonOperator, userInput, integerToCompareAgainst);
 
-            var comparisonOperator = condition[0], // gte, gt, lte, lt, eq, noteq
-              integerToCompareAgainst = parseInt(condition[1]); // integer we will compare the userEnteredValue to
+            /* If there are multiple conditions but the logical operator is an ||, we can return true after the first condition that passes. */
+            /* If there is no logical operator (only 1 condition is specified), or it is an &&, we must loop through all conditions and only return true if all pass. */
+            if (logicalOperator && logicalOperator === '_or_' && conditionResult === true) {
+              valuePassesConditions = true;
+              return false;
+            } else if (logicalOperator && logicalOperator === '_and_' && conditionResult === false) {
+              valuePassesConditions = false;
+              return false;
+            } else {
+              valuePassesConditions = conditionResult;
+            }
 
-            return this.convertToArithmeticComparison(comparisonOperator, userInput, integerToCompareAgainst);
-          }, this);
+          });
+
           return valuePassesConditions;
         },
       },
@@ -148,13 +156,14 @@
        * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
        */
       integerEval: function(childBranches, userEnteredValue) {
-        var userInput = parseInt(userEnteredValue), // convert input value from string to integer
+        var self = this,
+          userInput = parseInt(userEnteredValue), // convert input value from string to integer
           logicalOperator,
           numericOperations,
           conditionsForShowingChildBranch;
 
         /* for each of the possible child branches, find the condition that must be met in order for them to be shown */
-        _.each(childBranches, function(childBranch) {
+        $.each(childBranches, function(index, childBranch) {
           var $childBranch = $(childBranch),
             showOnValueAttribute = $(childBranch).data('show-on-value'),
             conditionType = typeof showOnValueAttribute,
@@ -182,7 +191,7 @@
               conditionsForShowingChildBranch = showOnValueAttribute.split(',');
               logicalOperator = '_or_';
               numericOperations = [];
-              _.each(conditionsForShowingChildBranch, function(condition) {
+              $.each(conditionsForShowingChildBranch, function(index, condition) {
                 numericOperations.push('eq-' + condition);
               });
               break;
@@ -193,11 +202,11 @@
               numericOperations = [conditionsForShowingChildBranch[0], conditionsForShowingChildBranch[2]]; // gte-{int}, gt-{int}, lte-{int}, lt-{int}, eq-{int}, noteq-{int}
           }
 
-          childBranchShouldBeShown = this.util.parseNumericConditions(userInput, numericOperations, logicalOperator);
+          childBranchShouldBeShown = self.util.parseNumericConditions(userInput, numericOperations, logicalOperator);
           (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
           $childBranch.find('div.field').addClass('hidden');
 
-        }, this);
+        });
       },
 
 
@@ -210,22 +219,21 @@
           userInput = self.util.cleanString(userEnteredValue),
           childBranchShouldBeShown;
 
-        _.each(childBranches, function(childBranch) {
+        $.each(childBranches, function(index, childBranch) {
           var $childBranch = $(childBranch),
             conditionsForShowingChildBranch = $childBranch.data('show-on-value').toString().split(','); // grab the conditions that must be true in order to show this child branch
-          conditionsForShowingChildBranch = _.map(conditionsForShowingChildBranch, function(condition) {
+          conditionsForShowingChildBranch = $.map(conditionsForShowingChildBranch, function(condition) {
             return self.util.cleanString(condition);
           });
           childBranchShouldBeShown = (conditionsForShowingChildBranch.indexOf(userInput) !== -1);
           (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
           $childBranch.find('div.field').addClass('hidden');
-
         });
       }
     }; // end BranchingForm.prototype
 
     /* Initialize the new forkable form */
-    new BranchingForm(form, formForks);
+    var userBranchingForm = new BranchingForm(form, formForks);
 
   }; // end $.fn.forkable
 
