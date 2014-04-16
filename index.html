@@ -97,7 +97,15 @@
     <script type="text/javascript">
 
       (function () {
-        $('#branching-form').forkable('.fork');
+        $('#branching-form').forkable('.fork', {
+            branchingMethods: {
+                "customEval": function(childBranches, userEnteredValue) {
+                    console.log("CUSTOM This: ", this);
+                    console.log("CB: ", childBranches);
+                    console.log("User Val: ", userEnteredValue)
+                }
+            }
+        });
 
         // /* Attach click event handler for custom radios */
         // $('#branching-form').find('div span.custom-radio').click(function(e) {

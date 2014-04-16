@@ -18,15 +18,20 @@
 
   "use strict";
 
-  $.fn.forkable = function(forks) {
+  $.fn.forkable = function(forks, opts) {
 
     var form = $(this);
     var formForks = $(this).find(forks);
 
-    var BranchingForm = function(form, forks) {
-      this.$domForm = form;
-      this.forks = forks;
-      this.init();
+    var BranchingForm = function(form, forks, options) {
+      var self = this,
+        opts = options || {};
+
+      self.$domForm = form;
+      self.forks = forks;
+      self.opts = opts;
+
+      self.init();
     };
 
     BranchingForm.prototype = {
@@ -34,6 +39,15 @@
       /* Attach change event handler to monitor the values of our forks */
       init: function() {
         var self = this;
+
+        /* If custom evaluation methods have been defined, make them available in the branching form */
+        /* TO DO: check that key doesn't already exist */
+        if (self.opts.branchingMethods) {
+          $.each(self.opts.branchingMethods, function(key, val) {
+            self[key] = val;
+          });
+        }
+
         $.each(self.forks, function(index, fork) {
           var branchMethod = $(fork).data('branching-fn'); // determine the type of evaluation we need to do on the input value
           if ($(fork).prop('type') === 'text') {
@@ -239,7 +253,7 @@
     }; // end BranchingForm.prototype
 
     /* Initialize the new forkable form */
-    var userBranchingForm = new BranchingForm(form, formForks);
+    var userBranchingForm = new BranchingForm(form, formForks, opts);
 
   }; // end $.fn.forkable
 
