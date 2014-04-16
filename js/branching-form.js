@@ -45,7 +45,13 @@
             var childBranches = self.$domForm.find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
               userEnteredValue = $(fork).val();
 
-            self[branchMethod](childBranches, userEnteredValue);
+            if (!branchMethod && isNaN(parseInt(userEnteredValue))) {
+              self.stringEval(childBranches, userEnteredValue);
+            } else if (!branchMethod) {
+              self.integerEval(childBranches, parseInt(userEnteredValue));
+            } else {
+              self[branchMethod](childBranches, userEnteredValue);
+            }
           });
         });
       },

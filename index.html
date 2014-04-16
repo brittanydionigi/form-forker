@@ -11,13 +11,13 @@
       <!-- Level 0 form field: person_age -->
       <div class="field">
         <label>How old are you?</label>
-        <input type="text" class="fork" data-branching-fn="integerEval" name="person_age" placeholder="Age" />
+        <input type="text" class="fork" name="person_age" placeholder="Age" />
 
         <!-- Level 1 form fields: children of person_age -->
         <div class="field hidden" data-parent-branch="person_age" data-show-on-value="gte-3_and_lte-7">
           <p class="info"><span class="level">Level 1</span> Person's age is <b>between 3 & 7</b></p>
           <label>What's your favorite candy?</b></label>
-          <input type="text" class="fork" name="favorite_candy" data-branching-fn="stringEval" placeholder="Favorite candy" />
+          <input type="text" class="fork" name="favorite_candy" placeholder="Favorite candy" />
 
           <!-- Level 2 form fields: children of favorite_candy -->
           <div class="field hidden" data-parent-branch="favorite_candy" data-show-on-value=" StarBurst,skittles">
@@ -36,7 +36,7 @@
         <div class="field hidden" data-parent-branch="person_age" data-show-on-value="5">
            <p class="info"><span class="level">Level 1</span> Person's age <b>equals 5</b></p>
           <label>Did you start kindergarden this year?</label>
-          <input type="hidden" class="fork" name="started_kindergarden_this_year" data-branching-fn="stringEval" />
+          <input type="hidden" class="fork" name="started_kindergarden_this_year" />
           <span class="custom-radio"> YES</span>
           <span class="custom-radio"> NO</span>
 
@@ -52,9 +52,9 @@
         <div class="field hidden" data-parent-branch="person_age" data-show-on-value="gte-21">
           <p class="info"><span class="level">Level 1</span>Person's age is <b>at least 21</b></p>
           <label>Did you graduate college?</label>
-          <input type="radio" class="fork" data-branching-fn="stringEval" name="graduated_college" value="1">Yes &nbsp;
-          <input type="radio" class="fork" data-branching-fn="stringEval" name="graduated_college" value="2">No &nbsp;
-          <input type="radio" class="fork" data-branching-fn="stringEval" name="graduated_college" value="3">Maybe
+          <input type="radio" class="fork" name="graduated_college" value="1">Yes &nbsp;
+          <input type="radio" class="fork" name="graduated_college" value="2">No &nbsp;
+          <input type="radio" class="fork" name="graduated_college" value="3">Maybe
 
           <!-- Level 2 form fields: children of started_kindergarden_this_year -->
           <div class="field hidden" data-parent-branch="graduated_college" data-show-on-value="1">
@@ -74,7 +74,7 @@
       <!-- Level 0 form field: person_income -->
       <div class="field">
         <label>What is your annual income?</label>
-        <select class="fork" data-branching-fn="stringEval" name="person_income">
+        <select class="fork" name="person_income">
           <option value="under30">$0 - $30,000</option>
           <option value="between30and60">$30,000 - $60,000</option>
           <option value="between60and100">$60,000 - $100,000</option>
