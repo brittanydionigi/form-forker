@@ -107,7 +107,7 @@
           if ($(fork).prop('type') === 'text') { $(fork).keyup(function() { $(fork).trigger('change'); }); }
           $(fork).change(function (e) {
             var childBranches = $('#branching-form').find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
-                userEnteredValue: $(fork).val();
+                userEnteredValue = $(fork).val();
 
             userFeedbackForm[branchMethod](childBranches, userEnteredValue);
           });

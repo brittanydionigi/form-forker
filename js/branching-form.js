@@ -1,16 +1,20 @@
+
+'use strict';
+
 /**
  * Setup branching form
  * @param {object} form The jQuery DOM form element
  * @param {array} forks An array of the jQuery form elements that act as the 'forks' for branching when their values change
  */
 var BranchingForm = function(form, forks) {
-  'use strict';
-
   this.domForm = form;
   this.forks = forks;
+};
 
+
+BranchingForm.prototype = {
   /* Gather any values from inputs that are currently displayed to submit */
-  this.postData = function() {
+  postData: function() {
     var unhiddenFields = this.domForm.find('div:not(".hidden")'),
       inputFieldsToSend = unhiddenFields.find('> input, > textarea, > select'),
       postData = {};
@@ -28,7 +32,7 @@ var BranchingForm = function(form, forks) {
   },
 
 
-  this.util = {
+  util: {
 
     /* Fake radio buttons so we can give them custom styling; will probaby need to support custom select menus, checkboxes, etc. in the future */
     handleCustomRadios: function(e) {
@@ -105,8 +109,8 @@ var BranchingForm = function(form, forks) {
    * Method for comparing integer values with arithmetic operators. This code is method is CRAZY.
    * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
    */
-  this.integerEval = function(childBranches, userEnteredValue) {
-    var userEnteredValue = parseInt(userEnteredValue), // convert input value from string to integer
+  integerEval: function(childBranches, userEnteredValue) {
+    var userInput = parseInt(userEnteredValue), // convert input value from string to integer
       logicalOperator,
       numericOperations,
       conditionsForShowingChildBranch;
@@ -151,21 +155,21 @@ var BranchingForm = function(form, forks) {
           numericOperations = [conditionsForShowingChildBranch[0], conditionsForShowingChildBranch[2]]; // gte-{int}, gt-{int}, lte-{int}, lt-{int}, eq-{int}, noteq-{int}
       }
 
-      childBranchShouldBeShown = this.util.parseNumericConditions(userEnteredValue, numericOperations, logicalOperator);
+      childBranchShouldBeShown = this.util.parseNumericConditions(userInput, numericOperations, logicalOperator);
       (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
       $childBranch.find('div.field').addClass('hidden');
 
     }, this);
-  };
+  },
 
 
   /*
    * Compare string values. Will also work for boolean values by comparing their string equivalents, though this could get buggy.
    * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
    */
-  this.stringEval = function(childBranches, userEnteredValue) {
+  stringEval: function(childBranches, userEnteredValue) {
     var self = this,
-      userEnteredValue = self.util.cleanString(userEnteredValue),
+      userInput = self.util.cleanString(userEnteredValue),
       childBranchShouldBeShown;
 
     _.each(childBranches, function(childBranch) {
@@ -174,10 +178,10 @@ var BranchingForm = function(form, forks) {
       conditionsForShowingChildBranch = _.map(conditionsForShowingChildBranch, function(condition) {
         return self.util.cleanString(condition);
       });
-      childBranchShouldBeShown = (conditionsForShowingChildBranch.indexOf(userEnteredValue) !== -1);
+      childBranchShouldBeShown = (conditionsForShowingChildBranch.indexOf(userInput) !== -1);
       (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
       $childBranch.find('div.field').addClass('hidden');
 
     });
-  };
+  }
 };
