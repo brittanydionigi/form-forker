@@ -1,5 +1,5 @@
 #Form forking
-Handle forks in the road (form) based on user input.
+jQuery plugin for handling conditional form fields based on user input.
 
 
 ##Branching Methods
