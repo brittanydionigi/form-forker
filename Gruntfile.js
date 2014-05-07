@@ -84,9 +84,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsvalidate');
   grunt.loadNpmTasks('grunt-release');
 
-  grunt.registerTask('default', ['install-hook', 'jsbeautifier', 'mocha']);
+  grunt.registerTask('default', ['install-hook', 'jshint', 'jsvalidate', 'jsbeautifier', 'mocha']);
   grunt.registerTask('default', []);
-  grunt.registerTask('precommit', ['jsvalidate', 'jsbeautifier', 'mocha']);
+  grunt.registerTask('precommit', ['jsvalidate', 'jshint', 'jsbeautifier', 'mocha']);
 
   grunt.registerTask('install-hook', function() {
     var fs = require('fs');
