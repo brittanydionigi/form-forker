@@ -22,7 +22,7 @@
   $.fn.forkable = function(forks, opts) {
 
     var form = $(this);
-    var formForks = $(this).find(forks);
+    var formForks = form.find(forks);
 
     var BranchingForm = function(form, forks, options) {
       var self = this,
@@ -175,7 +175,6 @@
       /*
        * Method for comparing integer values with arithmetic operators. This code is method is CRAZY.
        * @param {object} opts Options containing references to the child branches and the user-entered value to be evaluated
-       * TO DO: add range 5..10 equation
        */
       integerEval: function(childBranches, userEnteredValue) {
         var self = this,
@@ -195,7 +194,10 @@
             if (showOnValueAttribute.indexOf(',') !== -1) {
               conditionType = 'integerArray';
             }
-            if (showOnValueAttribute.match(/\_and\_|\_or\_/g) !== null) {
+            else if (showOnValueAttribute.indexOf('..') !== -1) {
+              conditionType = 'inclusiveRange';
+            }
+            else if (showOnValueAttribute.match(/\_and\_|\_or\_/g) !== null) {
               conditionType = 'logicalExpression';
             }
           }
@@ -207,6 +209,12 @@
 
             case 'string': // data-show-on-value="gte-8"
               numericOperations = [showOnValueAttribute];
+              break;
+
+            case 'inclusiveRange': // data-show-on-value="3..7"
+              conditionsForShowingChildBranch = showOnValueAttribute.split('..');
+              logicalOperator = "_and_"; // _and_, _or_
+              numericOperations = ["gte-" + conditionsForShowingChildBranch[0], "lte-" + conditionsForShowingChildBranch[1]]; // gte-{int}, lte-{int}
               break;
 
             case 'integerArray': // data-show-on-value="1,2,3,4,5"
