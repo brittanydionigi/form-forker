@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        'js/*.js',
+        'src/*.js',
         'test/*.js'
       ]
     },
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       }
     },
     jsbeautifier: {
-      files: ["js/*.js", "css/*.css"],
+      files: ["src/*.js", "css/*.css"],
       options: {
         html: {
           braceStyle: "collapse",

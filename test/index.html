@@ -1,22 +1,25 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Mocha</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="../components/sinon/lib/sinon.js"></script>
-    <script src="../components/sinon/lib/sinon/spy.js"></script>
-    <script src="../components/requirejs/require.js"></script>
-    <script>mocha.setup('bdd')</script>
-    <script>
-      var config = {
-        baseUrl:'../'
-      }
-      require.config(config);
-      require(['test/example'], function(){
-        mocha.run();
-      });
-    </script>
-  </head>
-  <body>
-    <div id="mocha"></div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>jQuery Form Forker Test Suite</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script src="../libs/jquery/jquery.js"></script>
+  <script>jQuery.noConflict()</script>
+  <!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
+  <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+  <script src="../libs/qunit/qunit.js"></script>
+  <script src="../libs/sinon/sinon.js"></script>
+  <!-- Load local lib and tests. -->
+  <script src="../src/jquery.form-forker.js"></script>
+  <script src="jquery.form-forker_test.js"></script>
+</head>
+<body>
+  <h1 id="qunit-header">jQuery Form Forker Test Suite</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+  <div id="qunit-fixture"></div>
+</body>
 </html>
