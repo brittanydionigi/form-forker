@@ -41,9 +41,11 @@
         var self = this;
 
         /* If custom evaluation methods have been defined, make them available in the branching form */
-        /* TO DO: check that key doesn't already exist */
         if (self.opts.branchingMethods) {
           $.each(self.opts.branchingMethods, function(key, val) {
+            if (typeof self[key] !== "undefined") {
+              console.log("Warning: You are overriding the built-in " + key + " method. If this is not the behavior you want, rename your custom branching method.");
+            }
             self[key] = val;
           });
         }
@@ -193,11 +195,9 @@
           if (conditionType === 'string') {
             if (showOnValueAttribute.indexOf(',') !== -1) {
               conditionType = 'integerArray';
-            }
-            else if (showOnValueAttribute.indexOf('..') !== -1) {
+            } else if (showOnValueAttribute.indexOf('..') !== -1) {
               conditionType = 'inclusiveRange';
-            }
-            else if (showOnValueAttribute.match(/\_and\_|\_or\_/g) !== null) {
+            } else if (showOnValueAttribute.match(/\_and\_|\_or\_/g) !== null) {
               conditionType = 'logicalExpression';
             }
           }
