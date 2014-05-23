@@ -44,7 +44,7 @@
         if (self.opts.branchingMethods) {
           $.each(self.opts.branchingMethods, function(key, val) {
             if (typeof self[key] !== "undefined") {
-              console.log("Warning: You are overriding the built-in " + key + " method. If this is not the behavior you want, rename your custom branching method.");
+              // dobee-dobee-doo let people know they are overriding something
             }
             self[key] = val;
           });
