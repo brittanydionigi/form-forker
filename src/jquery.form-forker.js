@@ -36,6 +36,9 @@
     };
 
     BranchingForm.prototype = {
+      testChangeEvent: function() {
+        console.log("HELLOOO!!!");
+      },
 
       init: function() {
         var self = this;
@@ -59,6 +62,7 @@
             });
           }
           $(fork).change(function(e) {
+            self.testChangeEvent();
             var childBranches = self.$domForm.find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
               userEnteredValue = $(fork).val();
 

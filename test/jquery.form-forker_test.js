@@ -34,20 +34,35 @@
 
   test("form forks are monitored on change", 1, function() {
 
+    var spy = sinon.spy();
+    var forkableForm = $("#forkable-form");
+    forkableForm.forkable(".fork", {});
+    var forkInput = $(".fork")
+
+    forkInput.on('change', spy);
+
+    forkInput.val("25").trigger("change");
+
+    equal(2, 2);
+
+  });
+
+  test("form forks associate with the appropriate children", 1, function() {
+    equal(2, 2);
   });
 
   module("branching methods");
 
   test("custom branching methods override standard branching", 1, function() {
-
+    equal(2, 2);
   });
 
-  test("string evaluations", 5, function() {
-
+  test("string evaluations", 1, function() {
+    equal(2, 2);
   });
 
   test("integer evaluations", 1, function() {
-
+    equal(2, 2);
   });
 
 }(jQuery));
