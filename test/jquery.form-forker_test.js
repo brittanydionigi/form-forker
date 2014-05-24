@@ -23,9 +23,11 @@
       raises(block, [expected], [message])
   */
 
-  test('beep beep test things', 1, function() {
-    var beepbeep = true;
-    ok(hasRetry);
+  test('forkable can be called as a jQuery plugin', 1, function() {
+    var forkableForm = $("#forkable-form");
+    forkableForm.forkable(".fork", {});
+    forkableForm.addClass("bar");
+    equal(forkableForm.hasClass("bar"), true)
   });
 
 

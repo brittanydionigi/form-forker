@@ -9,10 +9,9 @@
   <!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
   <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
   <script src="../libs/qunit/qunit.js"></script>
-  <script src="../libs/sinon/sinon.js"></script>
+  <!-- <script src="../libs/sinon/sinon.js"></script> -->
   <!-- Load local lib and tests. -->
   <script src="../src/jquery.form-forker.js"></script>
-  <script src="jquery.form-forker_test.js"></script>
 </head>
 <body>
   <h1 id="qunit-header">jQuery Form Forker Test Suite</h1>
@@ -20,6 +19,9 @@
   <div id="qunit-testrunner-toolbar"></div>
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
-  <div id="qunit-fixture"></div>
+  <div id="qunit-fixture">
+    <div id="forkable-form"><div class="fork"><input type="text"></input></div></div>
+  </div>
+  <script src="jquery.form-forker_test.js"></script>
 </body>
 </html>
