@@ -23,12 +23,31 @@
       raises(block, [expected], [message])
   */
 
-  test('forkable can be called as a jQuery plugin', 1, function() {
+  test("forkable can be called as a jQuery method", 1, function() {
     var forkableForm = $("#forkable-form");
     forkableForm.forkable(".fork", {});
     forkableForm.addClass("bar");
     equal(forkableForm.hasClass("bar"), true)
   });
 
+  module("forks");
+
+  test("form forks are monitored on change", 1, function() {
+
+  });
+
+  module("branching methods");
+
+  test("custom branching methods override standard branching", 1, function() {
+
+  });
+
+  test("string evaluations", 5, function() {
+
+  });
+
+  test("integer evaluations", 1, function() {
+
+  });
 
 }(jQuery));
