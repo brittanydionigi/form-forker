@@ -21,7 +21,7 @@
 
           <!-- Level 2 form fields: children of favorite_candy -->
           <div class="field hidden" data-parent-branch="favorite_candy" data-show-on-value=" StarBurst,skittles">
-             <p class="info"><span class="level">Level 2</span> Person's favorite candy is <b>starburst</b></p>
+             <p class="info"><span class="level">Level 2</span> Person's favorite candy is <b>starburst or skittles</b></p>
             <label>What flavor?</b></label>
             <input type="text" name="what_flavor_starburst" placeholder="What flavor?" />
           </div>
@@ -33,8 +33,8 @@
         </div>
 
         <!-- Level 1 form fields: children of person_age -->
-        <div class="field hidden" data-parent-branch="person_age" data-show-on-value="5">
-           <p class="info"><span class="level">Level 1</span> Person's age <b>equals 5</b></p>
+        <div class="field hidden" data-parent-branch="person_age" data-show-on-value="!5,!7">
+           <p class="info"><span class="level">Level 1</span> Person's age <b>does not equal 5 or 7</b></p>
           <label>Did you start kindergarden this year?</label>
           <input type="hidden" class="fork" name="started_kindergarden_this_year" />
           <span class="custom-radio"> YES</span>

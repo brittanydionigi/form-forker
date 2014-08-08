@@ -212,7 +212,12 @@
               break;
 
             case 'string': // data-show-on-value="gte-8"
-              numericOperations = [showOnValueAttribute];
+              if (showOnValueAttribute.charAt(0) === "!") {
+                numericOperations = ["noteq-" + showOnValueAttribute.slice(1)]
+              }
+              else {
+                numericOperations = [showOnValueAttribute];
+              }
               break;
 
             case 'inclusiveRange': // data-show-on-value="3..7"
@@ -223,10 +228,16 @@
 
             case 'integerArray': // data-show-on-value="1,2,3,4,5"
               conditionsForShowingChildBranch = showOnValueAttribute.split(',');
-              logicalOperator = '_or_';
               numericOperations = [];
               $.each(conditionsForShowingChildBranch, function(index, condition) {
-                numericOperations.push('eq-' + condition);
+                if (condition.charAt(0) === "!") {
+                  numericOperations.push('noteq-' + condition.slice(1));
+                  logicalOperator = '_and_';
+                }
+                else {
+                  numericOperations.push('eq-' + condition);
+                  logicalOperator = '_or_';
+                }
               });
               break;
 
@@ -235,6 +246,7 @@
               logicalOperator = conditionsForShowingChildBranch[1]; // _and_, _or_
               numericOperations = [conditionsForShowingChildBranch[0], conditionsForShowingChildBranch[2]]; // gte-{int}, gt-{int}, lte-{int}, lt-{int}, eq-{int}, noteq-{int}
           }
+
 
           childBranchShouldBeShown = self.util.parseNumericConditions(userInput, numericOperations, logicalOperator);
           (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
