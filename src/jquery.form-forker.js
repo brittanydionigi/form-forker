@@ -36,10 +36,10 @@
       getForks: function() {
         var self = this;
         self.forks = [];
-        var childrenFormFields = $('#branching-form').find('div[data-parent-branch]');
+        var childrenFormFields = self.$domForm.find('div[data-parent-branch]');
         $.each(childrenFormFields, function(index, childFormField) {
           var forkName = $(childFormField).data("parent-branch");
-          var fork = $('#branching-form').find('input[name="' + forkName + '"]');
+          var fork = self.$domForm.find('input[name="' + forkName + '"]');
           self.forks.push(fork);
         });
       },
