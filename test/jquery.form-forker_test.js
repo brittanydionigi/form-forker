@@ -52,24 +52,20 @@
 
   });
 
-  test("text inputs are monitored on change", 1, function() {
+  test("forks are monitored on change", 1, function() {
     $.each(forkInputs, function(index, forkInput) {
-      if ($(forkInput).prop("type") !== "select-one") {
+      if (forkInput.prop("type") === "text" || forkInput.prop("type") === "hidden") {
         forkInput.val("25").trigger("change");
-      };
-    });
-
-    deepEqual(forkableForm.testChangeEvent.callCount, 6, "testChangeEvent was called 6 times for 6 inputs");
-  });
-
-  test("select inputs are monitored on change", 1, function() {
-    $.each(forkInputs, function(index, forkInput) {
-      if ($(forkInput).prop("type") === "select-one") {
-        $(forkInput).val("morethan100").trigger("change");
+      }
+      else if (forkInput.prop("type") === "radio") {
+        $("input[value='2']").prop('checked', true).trigger("change");
+      }
+      else {
+        forkInput.val("morethan100").trigger("change");
       }
     });
 
-    deepEqual(forkableForm.testChangeEvent.callCount, 1, "testChangeEvent was called once for 1 select menu");
+    deepEqual(forkableForm.testChangeEvent.callCount, 5, "testChangeEvent was called 5 times for 5 inputs");
   });
 
   test("form forks associate with the appropriate children", 1, function() {
