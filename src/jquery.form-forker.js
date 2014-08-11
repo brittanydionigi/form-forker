@@ -31,8 +31,7 @@
 
     BranchingForm.prototype = {
       testChangeEvent: function(e) {
-        console.log("HELLOOO!!!");
-        return("Changed...", e);
+        return(e);
       },
       getForks: function() {
         var self = this,
