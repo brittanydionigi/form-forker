@@ -2,23 +2,29 @@
 jQuery plugin for handling conditional form fields based on user input.
 
 
-##Branching Methods
-The default branching methods are `integerEval` and `stringEval`. By default, if the user input is a string that can successfully be parsed into an integer (i.e. "5"), the branching will perform an `integerEval`. If the result of the user input can not be parsed into a number, the form will branch on a `stringEval`. If, for some reason, you **don't** want this behavior, you can override which branching method is used by adding a `data-branching-fn: <branchingmethodname>` attribute to your form field element.
-
-###Creating a Custom Branching Method
-If you'd like to override the default branching methods with your own, you can pass in a `branchingMethods` object when calling forkable().
+##Getting Started
+Incude jquery.former-forker.js and a copy of jQuery on your page. Initialize the plugin on your form like so:
 
 ````
-$('#branching-form').forkable('.fork', {
-    branchingMethods: {
-        "customEval": function(childBranches, userEnteredValue) {
-            // do custom evaluation here
-        }
-    }
-});
+$('#branching-form').forkable();
 ````
 
-Add a `data-branching-fn` attribute to your form field element, and set it equal to the name of your custom branching method.
+
+##Branching Your Form
+Any form fields that should act as 'forks' in the road on your form must have a `name` attribute. For example:
+
+`<input type="text" name="person_age" placeholder="Age" />`
+
+The dependent children of this input (form fields that should be shown/hidden based on the value of `person_age`) need two data attributes: `data-parent-branch` and `data-show-on-value`.
+
+````
+<div class="field hidden" data-parent-branch="person_age" data-show-on-value="5">
+  <input type="text" name="favorite_cartoon" placeholder="What's your favorite cartoon?" />
+</div>
+````
+
+The `data-parent-branch` attribute should match the `name` of the fork it corresponds to.  The `data-show-on-value` attribute will let you specify the conditions that must be met in order to display this form field.
+
 
 ##Declaring Conditions
 To determine whether or not a child form field should be shown, you must specify the condition to be met by putting a `data-show-on-value` attribute on your form field.
@@ -56,3 +62,22 @@ You can also add an && or || operator to your conditions like so:
 data-show-on-value="gt-3_and_lt-7"
 data-show-on-value="gte-7_or_lte-3"
 ````
+
+
+##Branching Methods
+The default branching methods are `integerEval` and `stringEval`. By default, if the user input is a string that can successfully be parsed into an integer (i.e. "5"), the branching will perform an `integerEval`. If the result of the user input can not be parsed into a number, the form will branch on a `stringEval`. If, for some reason, you **don't** want this behavior, you can override which branching method is used by adding a `data-branching-fn: <branchingmethodname>` attribute to your form field element.
+
+###Creating a Custom Branching Method
+If you'd like to override the default branching methods with your own, you can pass in a `branchingMethods` object when calling forkable().
+
+````
+$('#branching-form').forkable({
+    branchingMethods: {
+        "customEval": function(childBranches, userEnteredValue) {
+            // do custom evaluation here
+        }
+    }
+});
+````
+
+Add a `data-branching-fn` attribute to your form field element, and set it equal to the name of your custom branching method.
