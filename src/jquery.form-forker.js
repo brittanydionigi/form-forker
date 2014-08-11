@@ -58,7 +58,7 @@
         if (self.opts.branchingMethods) {
           $.each(self.opts.branchingMethods, function(key, val) {
             if (typeof self[key] !== "undefined") {
-              // dobee-dobee-doo let people know they are overriding something
+              console.warn("Note: You are overriding one of Form Forker's default branching methods with \"" + key + "\". If this was not your intention, try renaming your custom branching method.");
             }
             self[key] = val;
           });
