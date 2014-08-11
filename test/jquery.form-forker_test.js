@@ -4,6 +4,8 @@
 /*global sinon:true */
 (function($) {
 
+  var forkableForm,
+      forkInputs;
   /*
     ======== QUnit Reference ========
     http://docs.jquery.com/QUnit
@@ -24,32 +26,57 @@
   */
 
   test("forkable can be called as a jQuery method", 1, function() {
-    var forkableForm = $("#forkable-form");
-    forkableForm.forkable(".fork", {});
-    forkableForm.addClass("bar");
-    equal(forkableForm.hasClass("bar"), true)
+    $("#forkable-form").forkable();
+    equal($("#forkable-form").hasClass("forkable"), true, "Form made forkable and has class 'forkable'")
   });
 
-  module("forks");
 
-  test("form forks are monitored on change", 1, function() {
 
-    var spy = sinon.spy();
-    var forkableForm = $("#forkable-form");
-    forkableForm.forkable(".fork", {});
-    var forkInput = $(".fork")
+  QUnit.module("forks", {
+    setup: function() {
+      // prepare something for all following tests
+      forkableForm = $("#forkable-form").forkable();
+      forkInputs = forkableForm.forks;
 
-    forkInput.on('change', spy);
+      sinon.spy(forkableForm, "testChangeEvent");
+    },
+    teardown: function() {
+      // clean up after each test
+      forkableForm.testChangeEvent.restore();
+    }
+  });
 
-    forkInput.val("25").trigger("change");
+  test("form forks are all found", 1, function() {
+    var forkInputs = forkableForm.forks;
+    deepEqual(forkInputs.length, 5, "There are 5 forks in the form");
 
-    equal(2, 2);
+  });
 
+  test("text inputs are monitored on change", 1, function() {
+    $.each(forkInputs, function(index, forkInput) {
+      if ($(forkInput).prop("type") !== "select-one") {
+        forkInput.val("25").trigger("change");
+      };
+    });
+
+    deepEqual(forkableForm.testChangeEvent.callCount, 6, "testChangeEvent was called 6 times for 6 inputs");
+  });
+
+  test("select inputs are monitored on change", 1, function() {
+    $.each(forkInputs, function(index, forkInput) {
+      if ($(forkInput).prop("type") === "select-one") {
+        $(forkInput).val("morethan100").trigger("change");
+      }
+    });
+
+    deepEqual(forkableForm.testChangeEvent.callCount, 1, "testChangeEvent was called once for 1 select menu");
   });
 
   test("form forks associate with the appropriate children", 1, function() {
     equal(2, 2);
   });
+
+
 
   module("branching methods");
 

@@ -30,22 +30,30 @@
     };
 
     BranchingForm.prototype = {
-      testChangeEvent: function() {
+      testChangeEvent: function(e) {
         console.log("HELLOOO!!!");
+        return("Changed...", e);
       },
       getForks: function() {
-        var self = this;
-        self.forks = [];
-        var childrenFormFields = self.$domForm.find('div[data-parent-branch]');
+        var self = this,
+            forkNames = [],
+            forkInputs = [],
+            childrenFormFields = self.$domForm.find('div[data-parent-branch]'); // TO DO: don't limit this to div elems
+
         $.each(childrenFormFields, function(index, childFormField) {
           var forkName = $(childFormField).data("parent-branch");
-          var fork = self.$domForm.find('input[name="' + forkName + '"]');
-          self.forks.push(fork);
+          if (forkNames.indexOf(forkName) === -1) {
+            forkNames.push(forkName);
+            var fork = self.$domForm.find('input[name="' + forkName + '"], select[name="' + forkName + '"]');
+            forkInputs.push(fork);
+          }
         });
+        self.forks = forkInputs;
       },
       init: function() {
         var self = this;
         self.getForks();
+        self.$domForm.addClass('forkable');
 
         /* If custom evaluation methods have been defined, make them available in the branching form */
         if (self.opts.branchingMethods) {
@@ -65,8 +73,9 @@
               $(fork).trigger('change');
             });
           }
+
           $(fork).change(function(e) {
-            self.testChangeEvent();
+            self.testChangeEvent(e.currentTarget);
             var childBranches = self.$domForm.find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
               userEnteredValue = $(fork).val();
 
@@ -284,6 +293,7 @@
 
     /* Initialize the new forkable form */
     var userBranchingForm = new BranchingForm($(this), opts);
+    return userBranchingForm;
 
   }; // end $.fn.forkable
 
