@@ -18,30 +18,34 @@
 
   "use strict";
 
-  // TO DO: Handle ! in conditional syntax, let users map custom conditional syntax
-  $.fn.forkable = function(forks, opts) {
+  $.fn.forkable = function(opts) {
 
-    var form = $(this);
-    var formForks = form.find(forks);
+    var BranchingForm = function(form, options) {
+      var opts = options || {};
 
-    var BranchingForm = function(form, forks, options) {
-      var self = this,
-        opts = options || {};
+      this.$domForm = form;
+      this.opts = opts;
 
-      self.$domForm = form;
-      self.forks = forks;
-      self.opts = opts;
-
-      self.init();
+      this.init();
     };
 
     BranchingForm.prototype = {
       testChangeEvent: function() {
         console.log("HELLOOO!!!");
       },
-
+      getForks: function() {
+        var self = this;
+        self.forks = [];
+        var childrenFormFields = $('#branching-form').find('div[data-parent-branch]');
+        $.each(childrenFormFields, function(index, childFormField) {
+          var forkName = $(childFormField).data("parent-branch");
+          var fork = $('#branching-form').find('input[name="' + forkName + '"]');
+          self.forks.push(fork);
+        });
+      },
       init: function() {
         var self = this;
+        self.getForks();
 
         /* If custom evaluation methods have been defined, make them available in the branching form */
         if (self.opts.branchingMethods) {
@@ -279,7 +283,7 @@
     }; // end BranchingForm.prototype
 
     /* Initialize the new forkable form */
-    var userBranchingForm = new BranchingForm(form, formForks, opts);
+    var userBranchingForm = new BranchingForm($(this), opts);
 
   }; // end $.fn.forkable
 
