@@ -1,4 +1,4 @@
-#Form forking
+#Form Forker
 jQuery plugin for handling conditional form fields based on user input.
 
 
