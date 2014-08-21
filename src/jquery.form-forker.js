@@ -37,7 +37,7 @@
         var self = this,
             forkNames = [],
             forkInputs = [],
-            childrenFormFields = self.$domForm.find('div[data-parent-branch]'); // TO DO: don't limit this to div elems
+            childrenFormFields = self.$domForm.find('[data-parent-branch]');
 
         $.each(childrenFormFields, function(index, childFormField) {
           var forkName = $(childFormField).data("parent-branch");
