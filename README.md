@@ -59,13 +59,13 @@ data-show-on-value="5..10"     // user input must be between 5 and 10, inclusive
 You can also add an && or || operator to your conditions like so:
 
 ````
-data-show-on-value="gt-3_and_lt-7"
-data-show-on-value="gte-7_or_lte-3"
+data-show-on-value="gte-3_and_lte-7" // essentially the same as 3..7
+data-show-on-value="gt-7_or_lt-3"
 ````
 
 
 ##Branching Methods
-The default branching methods are `integerEval` and `stringEval`. By default, if the user input is a string that can successfully be parsed into an integer (i.e. "5"), the branching will perform an `integerEval`. If the result of the user input can not be parsed into a number, the form will branch on a `stringEval`. If, for some reason, you **don't** want this behavior, you can override which branching method is used by adding a `data-branching-fn: <branchingmethodname>` attribute to your form field element.
+The default branching methods are `integerEval` and `stringEval`. By default, if the user input is a string that can successfully be parsed into an integer (i.e. "5"), the branching will perform an `integerEval`. If the result of the user input can not be parsed into an integer, the form will branch on a `stringEval`. If, for some reason, you **don't** want this behavior, you can override which branching method is used by adding a `data-branching-fn: <branchingmethodname>` attribute to your form field element.
 
 ###Creating a Custom Branching Method
 If you'd like to override the default branching methods with your own, you can pass in a `branchingMethods` object when calling forkable().
