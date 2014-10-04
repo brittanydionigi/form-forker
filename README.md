@@ -1,5 +1,5 @@
 #Form Forker
-jQuery plugin for handling conditional form fields based on user input.
+jQuery plugin for handling conditional form fields based on user input. [Demo](http://brittanystoroz.github.io/form-forker)
 
 
 ##Getting Started
