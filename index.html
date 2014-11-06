@@ -8,6 +8,7 @@
   <body>
     <div id="branching-form">
       <h1>Form Forker</h1>
+      <h2>A jQuery plugin for handling conditional form fields based on user input</h2>
 
       <!-- Level 0 form field: person_age -->
       <div class="field">
@@ -89,7 +90,8 @@
           <input type="text" name="being_rich" />
         </div>
       </div>
-    </div>
+      
+    </div> <!-- end forkable form -->
 
     <div id="fake-submit-button">Submit</div>
     <div id="fake-post-data"></div>
@@ -98,29 +100,7 @@
     <script type="text/javascript">
 
       (function () {
-        $('#branching-form').forkable({
-            branchingMethods: {
-                "customEval": function(childBranches, userEnteredValue) {
-                    console.log("CUSTOM This: ", this);
-                    console.log("CB: ", childBranches);
-                    console.log("User Val: ", userEnteredValue)
-                }
-            }
-        });
-
-        // /* Attach click event handler for custom radios */
-        // $('#branching-form').find('div span.custom-radio').click(function(e) {
-        //   userFeedbackForm.util.handleCustomRadios(e);
-        // });
-
-        // /* Stub submit button to display postData on form submit */
-        // $('#fake-submit-button').click(function(e) {
-        //   var stringifiedPostData = userFeedbackForm.postData();
-        //   stringifiedPostData = JSON.stringify(stringifiedPostData);
-        //   var radioVal = $(userFeedbackForm).find('input[type=radio').val();
-        //   $('#fake-post-data').html('<h2>Post Data on Submit:</h2>' + stringifiedPostData);
-        // });
-
+        $('#branching-form').forkable();
       })();
 
     </script>
