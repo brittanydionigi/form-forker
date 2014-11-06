@@ -103,7 +103,24 @@
         </div>
       </div>
     </div>
+
+
+    <div id="custom-forkable-form">
+      <!-- Level 0 form field: custom console log -->
+      <div class="field">
+        <label>How many messages would you like to log to the console?</label>
+        <input type="text" name="console_log" data-branching-fn="customConsoleLog" />
+
+        <!-- Level 1 form fields: children of person_income -->
+        <div class="field hidden" data-parent-branch="console_log" data-show-on-value="50">
+          <p class="info"><span class="level">Level 1</span> Person would like to log 100 messages to console (but we're dividing that value by two)</b></p>
+          <label>Happy to have 50 messages in your console?</label>
+          <input type="text" name="happy_messages" />
+        </div>
+      </div>
+    </div>
   </div>
+
   <script src="jquery.form-forker_test.js"></script>
 </body>
 </html>
