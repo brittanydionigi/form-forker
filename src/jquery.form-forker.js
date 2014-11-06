@@ -13,7 +13,6 @@
  *
  */
 
-;
 (function($, window, document, undefined) {
 
   "use strict";
@@ -30,17 +29,14 @@
     };
 
     BranchingForm.prototype = {
-      testChangeEvent: function(e) {
-        return(e);
-      },
       getForks: function() {
         var self = this,
-            forkNames = [],
-            forkInputs = [],
-            childrenFormFields = self.$domForm.find('[data-parent-branch]');
+          forkNames = [],
+          forkInputs = [],
+          childrenFormFields = self.$domForm.find('[data-parent-branch]');
 
         $.each(childrenFormFields, function(index, childFormField) {
-          var forkName = $(childFormField).data("parent-branch");
+          var forkName = $(childFormField).data('parent-branch');
           if (forkNames.indexOf(forkName) === -1) {
             forkNames.push(forkName);
             var fork = self.$domForm.find('input[name="' + forkName + '"], select[name="' + forkName + '"]');
@@ -57,8 +53,8 @@
         /* If custom evaluation methods have been defined, make them available in the branching form */
         if (self.opts.branchingMethods) {
           $.each(self.opts.branchingMethods, function(key, val) {
-            if (typeof self[key] !== "undefined") {
-              console.warn("Note: You are overriding one of Form Forker's default branching methods with \"" + key + "\". If this was not your intention, try renaming your custom branching method.");
+            if (typeof self[key] !== 'undefined') {
+              console.warn('Note: You are overriding one of Form Forker\'s default branching methods with \"' + key + '\". If this was not your intention, try renaming your custom branching method.');
             }
             self[key] = val;
           });
@@ -66,7 +62,6 @@
 
         /* Set up event handlers to monitor the values of our forks */
         $.each(self.forks, function(index, fork) {
-          var branchMethod = $(fork).data('branching-fn'); // determine the type of evaluation we need to do on the input value
           if ($(fork).prop('type') === 'text') {
             $(fork).keyup(function() {
               $(fork).trigger('change');
@@ -74,19 +69,24 @@
           }
 
           $(fork).change(function(e) {
-            self.testChangeEvent(e.currentTarget);
-            var childBranches = self.$domForm.find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
-              userEnteredValue = $(fork).val();
-
-            if (!branchMethod && isNaN(parseInt(userEnteredValue))) {
-              self.stringEval(childBranches, userEnteredValue);
-            } else if (!branchMethod) {
-              self.integerEval(childBranches, parseInt(userEnteredValue));
-            } else {
-              self[branchMethod](childBranches, userEnteredValue);
-            }
+            self.handleInputChange(e.currentTarget);
           });
         });
+      },
+
+      /* Evaluate the input of a form fork and call a branching method based on the input data and value */
+      handleInputChange: function(fork) {
+        var childBranches = this.$domForm.find('div[data-parent-branch=' + $(fork).prop('name') + ']'),
+          branchMethod = $(fork).data('branching-fn'),
+          userEnteredValue = $(fork).val();
+
+        if (!branchMethod && isNaN(parseInt(userEnteredValue))) {
+          this.stringEval(childBranches, userEnteredValue);
+        } else if (!branchMethod) {
+          this.integerEval(childBranches, parseInt(userEnteredValue));
+        } else {
+          this[branchMethod](childBranches, userEnteredValue);
+        }
       },
 
       /* Gather any values from inputs that are currently displayed to submit */
@@ -97,7 +97,11 @@
 
         $.each(inputFieldsToSend, function(index, input) {
           var postVal;
-          ($(input).prop('type') === 'radio') ? postVal = $('input:checked').val() : postVal = $(input).val(); // if input is a radio button, only send the value of the checked radio
+          if ($(input).prop('type') === 'radio') {
+            postVal = $('input:checked').val();
+          } else {
+            postVal = $(input).val(); // if input is a radio button, only send the value of the checked radio
+          }
 
           if (postVal) { // if the input value isn't blank, add a key to the postData object
             postData[$(input).prop('name')] = postVal;
@@ -109,18 +113,6 @@
 
 
       util: {
-
-        /* Fake radio buttons so we can give them custom styling; will probaby need to support custom select menus, checkboxes, etc. in the future */
-        handleCustomRadios: function(e) {
-          var $elem = $(e.currentTarget), // radios span that was clicked on
-            $associatedInput = $elem.parent().find('> input'), // the input whose value needs to be toggled based on our span selection
-            selectedRadioVal = $.trim($elem.html()); // the innerHTML of our selected span
-
-          $associatedInput.val(selectedRadioVal); // set the hidden input value equal to the selected span
-          $associatedInput.trigger('change'); // manually trigger the change even on our input so we can evaluate it's value
-          $elem.addClass('radio-selected').siblings().removeClass('radio-selected');
-        },
-
 
         /* Remove leading/trailing whitespace & convert to lowercase to ensure no false negatives when comparing strings */
         cleanString: function(dirtyString) {
@@ -186,7 +178,7 @@
           });
 
           return valuePassesConditions;
-        },
+        }
       },
 
 
@@ -219,41 +211,39 @@
           }
 
           switch (conditionType) {
-            case 'number': // data-show-on-value="1"
+            case 'number': // data-show-on-value='1'
               numericOperations = ['eq-' + showOnValueAttribute];
               break;
 
-            case 'string': // data-show-on-value="gte-8"
-              if (showOnValueAttribute.charAt(0) === "!") {
-                numericOperations = ["noteq-" + showOnValueAttribute.slice(1)]
-              }
-              else {
+            case 'string': // data-show-on-value='gte-8'
+              if (showOnValueAttribute.charAt(0) === '!') {
+                numericOperations = ['noteq-' + showOnValueAttribute.slice(1)];
+              } else {
                 numericOperations = [showOnValueAttribute];
               }
               break;
 
-            case 'inclusiveRange': // data-show-on-value="3..7"
+            case 'inclusiveRange': // data-show-on-value='3..7'
               conditionsForShowingChildBranch = showOnValueAttribute.split('..');
-              logicalOperator = "_and_"; // _and_, _or_
-              numericOperations = ["gte-" + conditionsForShowingChildBranch[0], "lte-" + conditionsForShowingChildBranch[1]]; // gte-{int}, lte-{int}
+              logicalOperator = '_and_'; // _and_, _or_
+              numericOperations = ['gte-' + conditionsForShowingChildBranch[0], 'lte-' + conditionsForShowingChildBranch[1]]; // gte-{int}, lte-{int}
               break;
 
-            case 'integerArray': // data-show-on-value="1,2,3,4,5"
+            case 'integerArray': // data-show-on-value='1,2,3,4,5'
               conditionsForShowingChildBranch = showOnValueAttribute.split(',');
               numericOperations = [];
               $.each(conditionsForShowingChildBranch, function(index, condition) {
-                if (condition.charAt(0) === "!") {
+                if (condition.charAt(0) === '!') {
                   numericOperations.push('noteq-' + condition.slice(1));
                   logicalOperator = '_and_';
-                }
-                else {
+                } else {
                   numericOperations.push('eq-' + condition);
                   logicalOperator = '_or_';
                 }
               });
               break;
 
-            case 'logicalExpression': // data-show-on-value="gte-3_and_lte-7"
+            case 'logicalExpression': // data-show-on-value='gte-3_and_lte-7'
               conditionsForShowingChildBranch = showOnValueAttribute.split(/(\_and\_|\_or\_)/g);
               logicalOperator = conditionsForShowingChildBranch[1]; // _and_, _or_
               numericOperations = [conditionsForShowingChildBranch[0], conditionsForShowingChildBranch[2]]; // gte-{int}, gt-{int}, lte-{int}, lt-{int}, eq-{int}, noteq-{int}
@@ -261,7 +251,11 @@
 
 
           childBranchShouldBeShown = self.util.parseNumericConditions(userInput, numericOperations, logicalOperator);
-          (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
+          if (childBranchShouldBeShown) {
+            $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden');
+          } else {
+            $childBranch.addClass('hidden');
+          }
           $childBranch.find('div.field').addClass('hidden');
 
         });
@@ -284,7 +278,11 @@
             return self.util.cleanString(condition);
           });
           childBranchShouldBeShown = (conditionsForShowingChildBranch.indexOf(userInput) !== -1);
-          (childBranchShouldBeShown) ? $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden') : $childBranch.addClass('hidden');
+          if (childBranchShouldBeShown) {
+            $childBranch.removeClass('hidden').find('> div.field').removeClass('hidden');
+          } else {
+            $childBranch.addClass('hidden');
+          }
           $childBranch.find('div.field').addClass('hidden');
         });
       }

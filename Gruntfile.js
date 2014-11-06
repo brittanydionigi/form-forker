@@ -24,28 +24,28 @@ module.exports = function(grunt) {
       }
     },
     jsbeautifier: {
-      files: ["src/*.js", "css/*.css"],
+      files: ['src/*.js', 'css/*.css'],
       options: {
         html: {
-          braceStyle: "collapse",
-          indentChar: " ",
-          indentScripts: "keep",
+          braceStyle: 'collapse',
+          indentChar: ' ',
+          indentScripts: 'keep',
           indentSize: 2,
           maxPreserveNewlines: 10,
           preserveNewlines: true,
-          unformatted: ["a", "sub", "sup", "b", "i", "u"],
+          unformatted: ['a', 'sub', 'sup', 'b', 'i', 'u'],
           wrapLineLength: 0
         },
         css: {
-          indentChar: " ",
+          indentChar: ' ',
           indentSize: 2
         },
         js: {
-          braceStyle: "collapse",
+          braceStyle: 'collapse',
           breakChainedMethods: false,
           e4x: false,
           evalCode: false,
-          indentChar: " ",
+          indentChar: ' ',
           indentLevel: 0,
           indentSize: 2,
           indentWithTabs: false,
