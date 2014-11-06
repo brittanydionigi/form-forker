@@ -68,16 +68,16 @@ data-show-on-value="gt-7_or_lt-3"
 The default branching methods are `integerEval` and `stringEval`. By default, if the user input is a string that can successfully be parsed into an integer (i.e. "5"), the branching will perform an `integerEval`. If the result of the user input can not be parsed into an integer, the form will branch on a `stringEval`. If, for some reason, you **don't** want this behavior, you can override which branching method is used by adding a `data-branching-fn: <branchingmethodname>` attribute to your form field element.
 
 ###Creating a Custom Branching Method
-If you'd like to override the default branching methods with your own, you can pass in a `branchingMethods` object when calling forkable().
+If you'd like to use custom branching methods, you can define them in a `branchingMethods` object when calling forkable().
 
 ````
 $('#branching-form').forkable({
     branchingMethods: {
-        "customEval": function(childBranches, userEnteredValue) {
+        customEval: function(childBranches, userEnteredValue) {
             // do custom evaluation here
         }
     }
 });
 ````
 
-Add a `data-branching-fn` attribute to your form field element, and set it equal to the name of your custom branching method.
+Add a `data-branching-fn` attribute to your form field element (at the parent fork level) and set it equal to the name of your custom branching method. Your custom method will now take precendence over the default `stringEval` and `integerEval` methods.
