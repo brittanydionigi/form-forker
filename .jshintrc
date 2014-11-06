@@ -19,6 +19,7 @@
     "$",
     "_",
     "describe",
-    "it"
+    "it",
+    "jQuery"
   ]
 }
