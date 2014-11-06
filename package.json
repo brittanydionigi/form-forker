@@ -1,13 +1,17 @@
 {
   "name": "form-forker",
-  "version": "0.0.0",
-  "description": "Fork your forms based on user input",
+  "version": "0.0.1",
+  "description": "A jQuery plugin for handling conditional form fields based on user input",
+  "keywords": ["jquery-plugin", "form", "form fields", "conditional forms"],
   "main": "index.html",
   "scripts": {
     "test": "grunt test"
   },
-  "repository": "",
-  "author": "Brittany Storoz",
+  "repository": "https://github.com/brittanystoroz/form-forker",
+  "author": {
+    "name": "Brittany Storoz",
+    "url": "http://twitter.com/brittanystoroz"
+  },
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.9.2",
