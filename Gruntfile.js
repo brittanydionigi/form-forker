@@ -15,13 +15,8 @@ module.exports = function(grunt) {
     jsvalidate: {
       files: '<%=jshint.all%>'
     },
-
-    mocha: {
-      index: ['test/index.html'],
-      options: {
-        run: true,
-        globals: []
-      }
+    qunit: {
+      all: ['test/index.html']
     },
     jsbeautifier: {
       files: ['src/*.js', 'css/*.css'],
@@ -61,6 +56,19 @@ module.exports = function(grunt) {
         }
       }
     },
+    githooks: {
+      all: {
+        // Will run the jshint and test:unit tasks at every commit
+        'pre-commit': 'jshint jsvalidate jsbeautifier qunit uglify'
+      }
+    },
+    uglify: {
+      my_target: {
+        files: {
+          'dist/jquery.form-forker.min.js': ['src/jquery.form-forker.js']
+        }
+      }
+    },
     release: {
       options: {
         bump: true, //default: true
@@ -82,14 +90,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-jsvalidate');
   grunt.loadNpmTasks('grunt-release');
+  grunt.loadNpmTasks('grunt-githooks');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['jshint', 'jsvalidate', 'jsbeautifier']);
-  grunt.registerTask('precommit', ['jsvalidate', 'jshint', 'jsbeautifier']);
-
-  grunt.registerTask('install-hook', function() {
-    var fs = require('fs');
-    grunt.file.copy('hooks/pre-commit', '.git/hooks/pre-commit');
-    fs.chmodSync('.git/hooks/pre-commit', '755');
-  });
-
+  grunt.registerTask('default', ['jshint', 'jsvalidate', 'jsbeautifier', 'qunit', 'uglify']);
 };

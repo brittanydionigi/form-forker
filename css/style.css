@@ -8,7 +8,6 @@ body {
   border-right: 1px solid #f8f8f8;
   min-height: 1000px;
 }
-
 h1 {
   font: 100 26px/30px'helvetica', arial, sans-serif;
   font-weight: 100;
@@ -16,12 +15,10 @@ h1 {
   color: #999;
   padding: 0px;
 }
-
 h2 {
   font: 400 18px/24px "helvetica neue";
   margin: 0px 0px 30px 0px;
 }
-
 #branching-form div.field p.info {
   font-size: 11px;
   background: rgba(0, 0, 0, 0.3);
@@ -30,53 +27,43 @@ h2 {
   text-align: right;
   margin: 0 0 5px 0;
 }
-
 #branching-form div.field > div.field > p.info {
   background: rgba(0, 0, 0, 0.2);
 }
-
 #branching-form div.field > div.field > div.field > p.info {
   background: rgba(0, 0, 0, 0.1);
 }
-
 #branching-form div.field p.info span.level {
   float: left;
 }
-
 #test {
   display: inline;
 }
-
 #branching-form div.field {
   padding: 15px 0px 15px 15px;
   height: auto;
   transition: padding 0.2s ease 0.0s;
 }
-
 #branching-form div.field label {
   display: block;
   padding: 5px 0px;
 }
-
 #branching-form div.field input {
   width: 99%;
   height: 18px;
 }
-
 #branching-form div.field input[type="radio"] {
   display: inline-block;
   margin: 10px 5px;
   width: auto;
   vertical-align: middle;
 }
-
 #branching-form div.field.hidden {
   overflow: hidden;
   height: 0px;
   padding: 0px 0px 0px 15px;
   transition: padding 0.2s ease 0.0s;
 }
-
 #branching-form div.field span.custom-radio {
   border: 1px solid #bfbfbf;
   border-radius: 5px;
@@ -88,11 +75,9 @@ h2 {
   padding: 4px 9px;
   cursor: pointer;
 }
-
 #branching-form div.field span.custom-radio.radio-selected {
   background-color: #cbcbcb;
 }
-
 #fake-submit-button {
   background-color: #6288a5;
   border: 1px solid rgb(83, 118, 145);
@@ -105,20 +90,17 @@ h2 {
   margin: 0 auto;
   color: #fff;
 }
-
 #fake-submit-button:hover {
   background-color: #326891;
   border-color: #325c8a;
   cursor: pointer;
 }
-
 #fake-post-data {
   margin: 40px auto;
   max-width: 600px;
   font: 400 12px/16px'courier', serif;
   word-wrap: break-word;
 }
-
 #fake-post-data h2 {
   font: 600 10px/16px'helvetica', arial, sans-serif;
   color: #666;
