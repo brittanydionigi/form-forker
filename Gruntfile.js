@@ -71,17 +71,7 @@ module.exports = function(grunt) {
     },
     release: {
       options: {
-        bump: true, //default: true
-        file: 'bower.json', //default: package.json
-        add: false, //default: true
-        commit: false, //default: true
-        tag: false, //default: true
-        push: false, //default: true
-        pushTags: false, //default: true
-        npm: false, //default: true
-        tagName: 'some-tag-<%= version %>', //default: '<%= version %>'
-        commitMessage: 'Check out my release <%= version %>', //default: 'release <%= version %>'
-        tagMessage: 'Tagging version <%= version %>' //default: 'Version <%= version %>'
+        additionalFiles: 'bower.json',
       }
     }
   });
