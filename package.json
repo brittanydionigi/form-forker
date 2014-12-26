@@ -1,6 +1,6 @@
 {
   "name": "form-forker",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A jQuery plugin for handling conditional form fields based on user input",
   "keywords": [
     "jquery-plugin",
